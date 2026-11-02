@@ -1,7 +1,8 @@
 {
   "app": "NestQ",
   "tagline": "Where is your nest?",
-  "sourceBranch": "MVP1-Final",
-  "sourceCommit": "5c75f78ad50428f23685bdc4467c109fc686bc4c",
-  "dataSnapshot": "2026-10-14"
+  "sourceBranch": "astra",
+  "apiBaseUrl": "https://nestq-neighborhood-api.snowyoasis13.chatgpt.site",
+  "sourceCommit": "dbf8949bbda0434e5709325ff1a7ab50220ad827",
+  "dataSnapshot": "2026-11-02T19:49:02.339Z"
 }
