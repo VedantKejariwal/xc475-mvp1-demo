@@ -3,6 +3,12 @@
   "tagline": "Where is your nest?",
   "sourceBranch": "astra",
   "apiBaseUrl": "https://nestq-neighborhood-api.snowyoasis13.chatgpt.site",
-  "sourceCommit": "9e4d89abe4ab1ca37c721603a364bca9c4f9018c",
+  "listingSnapshot": {
+    "period": "2026-09",
+    "retrievedAt": "2026-11-02T20:59:00.416Z",
+    "examples": 70,
+    "sha256": "85f035462151f210560b6d8b1cdc40c92171ade7a3d941e60c373e3223f562ca"
+  },
+  "sourceCommit": "896abdc7a55f9f4fdbe5393b8bb33a57e6a0233c",
   "dataSnapshot": "2026-11-02T19:49:02.339Z"
 }
