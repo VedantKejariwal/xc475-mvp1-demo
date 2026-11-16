@@ -2,13 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Syntax: a Content-Security-Policy in a <meta http-equiv> tag (GitHub Pages cannot send
+        response headers). Directives are separated by ";" and each lists the origins a kind of
+        resource may come from. 'self' is this site's own origin. It must stay above every
+        <script> and <link> so it applies to them.
+      Logic: allow only what the code uses and nothing else.
+        script-src / style-src / font-src 'self': every script, stylesheet and font is a built
+          file from this site. No inline script, no eval, no CDN.
+        img-src: own images, data: and blob: (MapLibre decodes sprites and patterns that way) and
+          tile.openstreetmap.org (tiles of the flat Leaflet map, ?map=v1).
+        connect-src (fetch): this site (bundled snapshot, footprint files, /api in local runs),
+          the hosted API Worker (src/data/api.ts), OpenFreeMap vector tiles and glyphs
+          (src/components/cityStyle.ts), the National Weather Service and its Open-Meteo fallback
+          (src/live/weather.ts), the MBTA V3 API (src/live/mbta.ts) and the bike-share GBFS feed
+          (src/live/bluebikes.ts).
+        worker-src / child-src 'self' blob:: the MapLibre worker.
+        object-src, frame-src 'none': no plugins and no embedded pages. base-uri and form-action
+          'self': an injected <base> or form cannot redirect the page's requests.
+        Links that open another site in a new tab (Google Street View, source pages) are
+          navigation, which a CSP does not restrict.
+      Connection: vite.config.ts (nestqCsp) loosens this for `npm run dev` only (Vite's dev server
+        needs an inline script and a WebSocket) and adds the origin of VITE_API_BASE_URL at build
+        time if it is not the one listed here. tests/security.spec.ts fails on any CSP violation.
+        frame-ancestors cannot be set from a meta tag; see docs/security-review.md F14.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self';
+        font-src 'self';
+        img-src 'self' data: blob: https://tile.openstreetmap.org;
+        connect-src 'self' https://nestq-neighborhood-api.snowyoasis13.chatgpt.site https://tiles.openfreemap.org https://api.weather.gov https://api.open-meteo.com https://api-v3.mbta.com https://gbfs.lyft.com;
+        worker-src 'self' blob:;
+        child-src 'self' blob:;
+        object-src 'none';
+        frame-src 'none';
+        base-uri 'self';
+        form-action 'self'
+      "
+    />
+    <!--
+      Syntax: the referrer policy as a <meta name="referrer"> tag.
+      Logic: strict-origin sends only "https://vedantkejariwal.github.io/" (never the path, query
+        or #screen) to other sites, and nothing at all over plain HTTP. The origin is kept rather
+        than no-referrer because the OpenStreetMap tile servers require a referrer.
+      Connection: applies to every fetch and image; new-tab links add rel="noopener noreferrer".
+    -->
+    <meta name="referrer" content="strict-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
       content="NestQ — Where is your nest? A Boston student housing demo with sample homes, dated public evidence and comparisons."
     />
     <title>NestQ — Where is your nest?</title>
-    <script type="module" crossorigin src="/xc475-mvp1-demo/assets/index-Dl12FtPF.js"></script>
+    <script type="module" crossorigin src="/xc475-mvp1-demo/assets/index-s34DnYnW.js"></script>
     <link rel="modulepreload" crossorigin href="/xc475-mvp1-demo/assets/jsx-runtime-CzKIrqpk.js">
     <link rel="stylesheet" crossorigin href="/xc475-mvp1-demo/assets/index-BX4yC9U0.css">
   </head>
